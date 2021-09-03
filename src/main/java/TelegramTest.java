@@ -1,6 +1,7 @@
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.File;
+import com.pengrad.telegrambot.model.PhotoSize;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.GetFile;
 import com.pengrad.telegrambot.response.GetFileResponse;
@@ -14,10 +15,9 @@ public class TelegramTest {
             // ... process updates
             // return id of last processed update or confirm them all
             for(Update upd : updates) {
-                System.out.println(upd.message().text());
-                System.out.println(upd.message().messageId());
                 if(upd.message().photo() != null) {
-                    GetFile request = new GetFile(upd.message().photo()[upd.message().photo().length - 1].fileId());
+                    PhotoSize pht[] = upd.message().photo();
+                    GetFile request = new GetFile(pht[pht.length - 1].fileId());
                     GetFileResponse getFileResponse = bot.execute(request);
                     File file = getFileResponse.file();
                     String fullPath = bot.getFullFilePath(file);
